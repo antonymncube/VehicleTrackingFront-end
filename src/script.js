@@ -1,5 +1,5 @@
 let map;
-let vehicleMarkers = [];  // Array to store vehicle markers
+let vehicleMarkers = [];
 
 // Sample data representing vehicle locations
 const vehicles = [
@@ -15,47 +15,51 @@ function initMap() {
         zoom: 12
     });
 
-    // Populate the vehicle list and add markers
     updateVehicleList();
     updateVehicleMarkers();
-
-    // Refresh vehicle locations every 30 seconds
-    setInterval(refreshVehicleLocations, 30000);
+    setInterval(refreshVehicleLocations, 3000);  // Refresh every 3 seconds
 }
 
 // Update the vehicle list UI
 function updateVehicleList() {
-    const vehicleList = document.getElementById('vehicle-list');
-    vehicleList.innerHTML = "";  // Clear the list before updating
+    const vehicleContainer = document.getElementById('vehicleContainer');
+    vehicleContainer.innerHTML = "";
 
     vehicles.forEach(vehicle => {
-        const li = document.createElement('li');
-        li.textContent = `${vehicle.name} - Last Location: (${vehicle.lat}, ${vehicle.lng}) - ${vehicle.timestamp}`;
-        li.onclick = () => zoomToVehicleLocation(vehicle);
-        vehicleList.appendChild(li);
+        const vehicleItem = document.createElement('a');
+        vehicleItem.className = 'list-group-item list-group-item-action';
+        vehicleItem.innerHTML = `
+            <h6 class="mb-1 fw-bold">${vehicle.name}</h6>
+            <p class="mb-1">Latitude: ${vehicle.lat}, Longitude: ${vehicle.lng}</p>
+            <small>Timestamp: ${vehicle.timestamp}</small>
+        `;
+        vehicleItem.onclick = () => zoomToVehicleLocation(vehicle);
+        vehicleContainer.appendChild(vehicleItem);
     });
 }
 
 // Update markers for vehicles on the map
 function updateVehicleMarkers() {
+    // Clear existing markers
+    vehicleMarkers.forEach(marker => marker.setMap(null));
+    vehicleMarkers = [];
+
     vehicles.forEach(vehicle => {
         const marker = new google.maps.Marker({
             position: { lat: vehicle.lat, lng: vehicle.lng },
             map: map,
             title: vehicle.name
         });
-
         vehicleMarkers.push(marker);
     });
 }
 
 // Refresh vehicle locations (simulate dynamic update or get from API)
 function refreshVehicleLocations() {
-    // Simulate new locations for vehicles
     vehicles.forEach((vehicle, index) => {
-        vehicle.lat += (Math.random() - 0.5) * 0.01;  // Random movement for demo
+        vehicle.lat += (Math.random() - 0.5) * 0.01;
         vehicle.lng += (Math.random() - 0.5) * 0.01;
-        vehicle.timestamp = new Date().toISOString().slice(0, 19).replace('T', ' ');  // Update timestamp
+        vehicle.timestamp = new Date().toISOString().slice(0, 19).replace('T', ' ');
     });
 
     updateVehicleList();  // Refresh the list with updated data
@@ -67,6 +71,3 @@ function zoomToVehicleLocation(vehicle) {
     map.setCenter({ lat: vehicle.lat, lng: vehicle.lng });
     map.setZoom(15);
 }
-
-// Initialize the map
-initMap();

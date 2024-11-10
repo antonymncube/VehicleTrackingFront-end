@@ -1,34 +1,49 @@
-/* #map {
-    height: 100vh;
-    width: 100%;
-} */
-
-/* Style the dashboard */
-.dashboard {
-    width: 300px;
-    float: left;
-    padding: 20px;
-}
-
-#vehicle-list {
-    list-style-type: none;
-    padding: 0;
-}
-
-#vehicle-list li {
-    cursor: pointer;
-    padding: 10px;
-    margin-bottom: 10px;
-    background-color: #f0f0f0;
-    border-radius: 5px;
-}
-
-#vehicle-list li:hover {
-    background-color: #d3d3d3;
-}
+ 
+ 
 
 /* Style the map */
-#map {
-    height: 100vh;
-    margin-left: 320px;
+/* #vehicle-list li:hover {
+    background-color: #d3d3d3;
+    margin-left: 50rem;
+} */
+
+#vehicle-list{
+    margin-left: 5rem;
 }
+  #map {
+    height: 80vh;
+    
+    width: 100%;
+    padding: 0px;
+}  
+
+ 
+  .container-fluid.main {
+    background-color: 	#dfdcdc !important;
+    padding: 20px;
+  }
+
+  .items{
+    margin-left: 0rem;
+    padding: 0;
+  }
+
+  .card {
+    border-radius: 100px;
+  }
+
+  .row{
+
+    height: 87vh;
+    margin-top: 1rem;
+  }
+
+  .map-col{
+
+    /* background-color: red !important; */
+    height: 90vh;
+  }
+
+  .navbar{
+    height: 60px;
+  }
